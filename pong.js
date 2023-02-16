@@ -1,4 +1,4 @@
-let speed = 20;
+let speed = innerHeight / 100;
 
 window.onload = function () {
     window.canvas = document.getElementById('canvas');
@@ -30,6 +30,8 @@ window.onload = function () {
 
     window.score = 0;
     window.AI = false;
+    window.VK_UP = false;
+    window.VK_DOWN = false;
 
     resizeCanvas();
     draw();
@@ -45,7 +47,7 @@ function draw()
     ctx.font = '5em monospace';
     ctx.fillStyle = '#fff';
     let width = ctx.measureText(score).width;
-    ctx.fillText(score, canvas.width / 2 - width / 2, canvas.height / 15);
+    ctx.fillText(score, canvas.width / 2 - width / 2, canvas.height / 15 + 30);
 
     drawBall();
     drawPlayer();
@@ -88,16 +90,32 @@ function resizeCanvas()
 document.onkeydown = function (e) {
     if(!AI) {
         if (e.code === "KeyW" || e.code === "ArrowUp") {
-            player.y -= speed;
+            VK_UP = true;
         }
         if (e.code === "KeyS" || e.code === "ArrowDown") {
-            player.y += speed;
+            VK_DOWN = true;
+        }
+    }
+}
+
+document.onkeyup = function (e) {
+    if(!AI) {
+        if (e.code === "KeyW" || e.code === "ArrowUp") {
+            VK_UP = false;
+        }
+        if (e.code === "KeyS" || e.code === "ArrowDown") {
+            VK_DOWN = false;
         }
     }
 }
 
 function update()
 {
+    if(VK_UP)
+        move("up")
+    else if(VK_DOWN)
+        move("down")
+
     if(player.y + player.height >= canvas.height)
     {
         player.y = canvas.height - player.height;
@@ -106,17 +124,11 @@ function update()
         player.y = 0;
     } 
 
-    if (ball.radius + ball.x > innerWidth)
-        ball.velocity_x = 0 - ball.velocity_x;
+    if (ball.radius + ball.x > innerWidth || ball.x - ball.radius < 0)
+        ball.velocity_x *= - 1;
 
-    if (ball.x - ball.radius < 0)
-        ball.velocity_x = 0 - ball.velocity_x;
-
-    if (ball.y + ball.radius > innerHeight)
-        ball.velocity_y = 0 - ball.velocity_y;
-
-    if (ball.y - ball.radius < 0)
-        ball.velocity_y = 0 - ball.velocity_y;
+    if (ball.y + ball.radius > innerHeight || ball.y - ball.radius < 0)
+        ball.velocity_y *= - 1;
 
     ball.x += ball.velocity_x;
     ball.y += ball.velocity_y;
@@ -125,7 +137,7 @@ function update()
     {
         if(ball.y + ball.radius >= player.y && ball.y - ball.radius <= player.y + player.height)
         {
-            ball.velocity_x = 0 - ball.velocity_x;
+            ball.velocity_x *= -1;
             if(!AI) score++;
         }
     }
@@ -134,7 +146,7 @@ function update()
     {
         if(ball.y + ball.radius >= paddle.y && ball.y - ball.radius <= paddle.y + paddle.height)
         {
-            ball.velocity_x = 0 - ball.velocity_x;
+            ball.velocity_x *= -1;
         }
     }
 
@@ -186,5 +198,16 @@ function gameOver()
         if (e.code === "Space" || e.code === "Enter" || e.code === "NumpadEnter" || e.code === "KeyR") {
             location.reload();
         }
+    }
+}
+
+function move(direction)
+{
+    if(direction === "up")
+    {
+        player.y -= speed;
+    } else if(direction === "down")
+    {
+        player.y += speed;
     }
 }
