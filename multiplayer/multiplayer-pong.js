@@ -44,7 +44,12 @@ window.onload = function () {
     setInterval(update, 1000/60);
 }
 
-window.onresize = function () { location.reload(); }
+window.onresize = function () {
+    if(innerHeight < 600 || innerWidth < 850)
+        location.replace('../error/error.html');
+    else
+        location.reload();
+}
 
 function resizeCanvas() {
     canvas.width = innerWidth;
