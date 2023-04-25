@@ -85,7 +85,12 @@ function drawPaddle() {
     ctx.fillRect(paddle.x, paddle.y, paddle.width, paddle.height);
 }
 
-window.onresize = function () { location.reload(); }
+window.onresize = function () {
+    if(innerHeight < 600 || innerWidth < 850)
+        location.replace('../error/error.html');
+    else
+        location.reload();
+}
 
 function resizeCanvas() {
     canvas.width = window.innerWidth;
