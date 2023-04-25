@@ -1,0 +1,29 @@
+:root {
+    --background-color: #fdf0f0;
+    --error-text-color: #e93e5f;
+}
+
+.center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+body {
+    background-color: var(--background-color);
+    text-align: center;
+    color: var(--error-text-color);
+}
+
+#error-message {
+    font-family: "BankGothic Md BT";
+    border: #e93e5f solid 0.2em;
+    padding: 3vh;
+    font-size: 4vh;
+    font-weight: normal;
+}
+
+#error-text { font-weight: bolder }

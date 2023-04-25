@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon-error.png">
+    <title>Error</title>
+</head>
+<body>
+    <div id="error-message" class="center">
+        <p id="error-text">Error!</p>
+        <p>Sorry, your screen is too small to play this game.</p>
+        <p>Minimum screen size: 850x600</p>
+        <p>Your screen size: <span id="screen-size"></span></p>
+    </div>
+
+    <script>
+        const screenSize = document.getElementById('screen-size');
+        screenSize.innerHTML = `${innerWidth}x${innerHeight}`;
+
+        window.onresize = () => {
+            screenSize.innerHTML = `${innerWidth}x${innerHeight}`;
+            if(innerHeight >= 600 && innerWidth >= 850) {
+                location.replace('../index.html');
+            }
+        }
+    </script>
+</body>
+</html>

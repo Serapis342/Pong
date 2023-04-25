@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+    <title>Pong - Menu</title>
+</head>
+<body>
+    <div id="container" >
+        <div id="animation">
+            <span id="simply-text">Simply</span>
+            <span id="slide">
+                <span id="pong-text">Pong</span>
+            </span>
+        </div>
+    </div>
+    <div class="center">
+        <button id="singleplayer" class="button"><span>Singleplayer</span></button>
+        <button id="multiplayer" class="button"><span>Multiplayer</span></button> <br>
+        <input type="range" min="5" max="15" step="1" value="10" class="slider" id="speed-slider">
+    </div>
+    <script>
+        const singleplayer = document.getElementById('singleplayer');
+        const multiplayer = document.getElementById('multiplayer');
+        const slider = document.getElementById('speed-slider');
+        document.cookie = `speed=${slider.value}; SameSite=None; Secure`;
+
+        if(innerHeight < 600 || innerWidth < 850) {
+            location.href = 'error.html';
+        }
+
+        window.onresize = () => {
+            if(innerHeight < 600 || innerWidth < 850) {
+                location.replace('error/error.html');
+            }
+        }
+
+        slider.addEventListener('input', () => {
+            document.cookie = `speed=${slider.value}; SameSite=None; Secure`;
+        });
+
+        singleplayer.addEventListener('click', () => {
+            window.location.href = 'singleplayer/singleplayer.html';
+        });
+
+        multiplayer.addEventListener('click', () => {
+            window.location.href = 'multiplayer/multiplayer.html';
+        });
+    </script>
+</body>
+</html>
